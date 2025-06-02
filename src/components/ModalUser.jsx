@@ -9,7 +9,7 @@ const Modal = ({ children, isOpen, onClose, title }) => {
       <div
         className="fixed inset-0 bg-black/50 dark:bg-black/70 z-40 transition-opacity duration-200 min-h-screen"
         onClick={onClose}
-        style={{ minHeight: "100vh", minHeight: "100dvh" }}
+        style={{ minHeight: "max(100vh, 100dvh)" }}
       />
 
       {/* Modal container - improved positioning */}
