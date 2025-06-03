@@ -21,7 +21,7 @@ const SideMenu = ({ activeMenu }) => {
 
   // Define default profile image URL
   const DEFAULT_PROFILE_IMAGE =
-    "https://res.cloudinary.com/dpehq6hqg/image/upload/v1748947330/project-management/rmxfq5klt633rfqqtwke.jpg";
+    "https://res.cloudinary.com/dpehq6hqg/image/upload/v1748965541/rmxfq5klt633rfqqtwke_msqbse.jpg";
 
   const handleClick = (route) => {
     if (route === "logout") {
