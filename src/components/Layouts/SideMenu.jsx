@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
-import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA, SIDE_MENU_SUPERADMIN_DATA, SIDE_MENU_HRD_DATA } from "../../utils/data";
+import {
+  SIDE_MENU_DATA,
+  SIDE_MENU_USER_DATA,
+  SIDE_MENU_SUPERADMIN_DATA,
+  SIDE_MENU_HRD_DATA,
+} from "../../utils/data";
 import ProfilePhotoSelector from "../Inputs/ProfilePhotoSelector";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATH } from "../../utils/apiPath";
@@ -13,6 +18,10 @@ const SideMenu = ({ activeMenu }) => {
   const [showSelector, setShowSelector] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
+
+  // Define default profile image URL
+  const DEFAULT_PROFILE_IMAGE =
+    "https://res.cloudinary.com/dpehq6hqg/image/upload/v1748947330/project-management/rmxfq5klt633rfqqtwke.jpg";
 
   const handleClick = (route) => {
     if (route === "logout") {
@@ -42,32 +51,40 @@ const SideMenu = ({ activeMenu }) => {
     }
   }, [user]);
 
-  const handleImageUpload = async () => {
-    if (!selectedImage) {
-      toast.error("Please select an image first");
-      return;
-    }
+  const handleImageUpload = async (file) => {
     try {
-      // Upload image to server or cloud storage
       const formData = new FormData();
-      formData.append("file", selectedImage);
-      const uploadRes = await axiosInstance.post("/api/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      const imageUrl = uploadRes.data.url;
+      formData.append("image", file);
 
-      // Update user profile photo
-      await axiosInstance.put(`${API_PATH.USERS.GET_USER_BY_ID(user._id)}/profile-photo`, {
-        profileImageUrl: imageUrl,
-      });
+      // Upload and update in one request
+      const response = await axiosInstance.put(
+        API_PATH.AUTH.UPDATE_PROFILE_PHOTO, // Use the defined path
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
-      // Update user context
-      updateUser({ ...user, profileImageUrl: imageUrl });
-      toast.success("Profile picture updated successfully");
-      setShowSelector(false);
-      setSelectedImage(null);
+      if (response.data) {
+        updateUser(response.data);
+        toast.success("Profile picture updated successfully");
+        setShowSelector(false);
+        setSelectedImage(null);
+        return true;
+      }
     } catch (error) {
-      toast.error("Failed to update profile picture");
+      console.error("Profile photo update error:", error);
+      toast.error(
+        error.response?.data?.message || "Failed to update profile picture"
+      );
+      return false;
+    }
+  };
+
+  const handleImageSelected = async (file) => {
+    const success = await handleImageUpload(file);
+    if (success) {
+      setSelectedImage(null);
     }
   };
 
@@ -79,7 +96,7 @@ const SideMenu = ({ activeMenu }) => {
             <img
               src={user.profileImageUrl}
               alt="Profile Image"
-              className="w-20 h-20 bg-slate-400 rounded-full cursor-pointer"
+              className="w-20 h-20 bg-slate-400 rounded-full cursor-pointer object-cover"
               onClick={() => setShowSelector(true)}
             />
           ) : (
@@ -91,8 +108,12 @@ const SideMenu = ({ activeMenu }) => {
             </div>
           )}
           {showSelector && (
-            <div className="absolute z-50 top-24 left-1/2 transform -translate-x-1/2 bg-white p-4 rounded shadow-lg">
-              <ProfilePhotoSelector image={selectedImage} setImage={setSelectedImage} />
+            <div className="absolute z-50 top-24 left-1/2 transform -translate-x-1/2 bg-white p-4 rounded shadow-lg border">
+              <ProfilePhotoSelector
+                image={selectedImage}
+                setImage={setSelectedImage}
+                onImageSelected={handleImageSelected}
+              />
               <div className="flex justify-end space-x-2 mt-2">
                 <button
                   className="btn btn-secondary"
@@ -102,9 +123,6 @@ const SideMenu = ({ activeMenu }) => {
                   }}
                 >
                   Cancel
-                </button>
-                <button className="btn btn-primary" onClick={handleImageUpload}>
-                  Upload
                 </button>
               </div>
             </div>

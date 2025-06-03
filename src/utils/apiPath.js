@@ -5,6 +5,7 @@ export const API_PATH = {
     REGISTER: `${BASE_URL}/api/auth/register`,
     LOGIN: `${BASE_URL}/api/auth/login`,
     GET_PROFILE: `${BASE_URL}/api/auth/profile`,
+    UPDATE_PROFILE_PHOTO: `${BASE_URL}/api/auth/profile/photo`, // Add this line
   },
 
   USERS: {
