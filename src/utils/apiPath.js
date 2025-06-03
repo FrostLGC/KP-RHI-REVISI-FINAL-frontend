@@ -1,4 +1,4 @@
-export const BASE_URL = "kp-rhi-revisi-final-backend-production.up.railway.app";
+export const BASE_URL = "https://kp-rhi-revisi-final-backend-production.up.railway.app";
 
 export const API_PATH = {
   AUTH: {
