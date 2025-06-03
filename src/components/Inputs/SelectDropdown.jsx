@@ -41,7 +41,7 @@ const SelectDropdown = ({ options, value, onChange, placeholder }) => {
               onClick={() => handleSelect(option.value)}
               className={`px-3 py-2 text-sm cursor-pointer 
                 hover:bg-blue-50 hover:text-blue-600 
-                transition duration-150 ${
+                transition duration-200 ${
                   value === option.value ? "bg-blue-50 text-blue-600" : ""
                 }`}
             >
