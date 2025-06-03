@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Dashboard from "./pages/Admin/Dashboard";
 import Login from "./pages/Auth/Login";
-import Signup from "./pages/Auth/Signup";
+import Signup from "./pages/Auth/SignUp";
 import ManageTasks from "./pages/Admin/ManageTasks";
 import CreateTask from "./pages/Admin/CreateTask";
 import ManageUsers from "./pages/Admin/ManageUsers";
