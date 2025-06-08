@@ -88,68 +88,90 @@ const Signup = () => {
 
   return (
     <AuthLayout>
-      <div className="lg:w-full h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black">Buat Akun Baru</h3>
-        <p className="text-xs text-slate-700 mt-[5px] mb-6">
-          Silakan masukkan Data Lengkap Anda
-        </p>
+      <div className="w-full h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
+        <div className="mb-6">
+          <h3 className="text-xl font-semibold text-black mb-2">
+            Buat Akun Baru
+          </h3>
+          <p className="text-xs text-slate-700">
+            Silakan masukkan Data Lengkap Anda
+          </p>
+        </div>
 
         <form onSubmit={handleSignUp}>
-          <ProfilePhotoSelector image={profilPic} setImage={setProfilPic} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              type="text"
-              label="Nama Lengkap"
-              value={fullName}
-              onChange={({ target }) => setFullName(target.value)}
-              placeholder="Nama Lengkap"
-            />
-            <Input
-              type="email"
-              label="Alamat Email"
-              value={email}
-              onChange={({ target }) => setEmail(target.value)}
-              placeholder="Email"
-            />
-            <Input
-              type="password"
-              label="Password"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
-              placeholder="Password"
-            />
-            <Input
-              type="text"
-              label="Jabatan (Posisi)"
-              value={position}
-              onChange={({ target }) => setPosition(target.value)}
-              placeholder="Contoh: Staff, HRD, Arsitek, Keuangan"
-            />
-            <Input
-              type="text"
-              label="Admin Invite Token"
-              value={AdminInviteToken}
-              onChange={({ target }) => setAdminInviteToken(target.value)}
-              placeholder="6 digit kode undangan admin"
-            />
+            <ProfilePhotoSelector image={profilPic} setImage={setProfilPic} />
+
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input
+                type="text"
+                label="Nama Lengkap"
+                value={fullName}
+                onChange={({ target }) => setFullName(target.value)}
+                placeholder="Nama Lengkap"
+              />
+              <Input
+                type="email"
+                label="Alamat Email"
+                value={email}
+                onChange={({ target }) => setEmail(target.value)}
+                placeholder="Email"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input
+                type="password"
+                label="Password"
+                value={password}
+                onChange={({ target }) => setPassword(target.value)}
+                placeholder="Password"
+              />
+              <Input
+                type="text"
+                label="Jabatan (Posisi)"
+                value={position}
+                onChange={({ target }) => setPosition(target.value)}
+                placeholder="Contoh: Staff, HRD, Arsitek, Keuangan"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input
+                type="text"
+                label="Admin Invite Token"
+                value={AdminInviteToken}
+                onChange={({ target }) => setAdminInviteToken(target.value)}
+                placeholder="6 digit kode undangan admin"
+              />
+            </div>
 
             {error && (
-              <p className="text-red-500 text-sm col-span-2">{error}</p>
+              <div className="w-full">
+                <p className="text-red-500 text-sm">{error}</p>
+              </div>
             )}
 
-            <button
-              type="submit"
-              className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 col-span-2"
-            >
-              Sign Up
-            </button>
+            <div className="w-full pt-4">
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+              >
+                Sign Up
+              </button>
+            </div>
 
-            <p className="text-xs text-slate-700 mt-4 col-span-2">
-              Sudah punya akun?{" "}
-              <Link to="/login" className="text-blue-600 hover:underline">
-                Masuk
-              </Link>
-            </p>
+            <div className="text-xs text-slate-700 mt-4 col-span-2">
+              <p className="text-xs text-slate-700">
+                Sudah punya akun?{" "}
+                <Link
+                  to="/login"
+                  className="text-blue-600 hover:underline font-medium"
+                >
+                  Masuk
+                </Link>
+              </p>
+            </div>
           </div>
         </form>
       </div>
