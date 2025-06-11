@@ -441,7 +441,7 @@ const CreateTask = () => {
 
       setOpenDeleteAlert(false);
       toast.success("Task deleted successfully");
-      navigate("/admin/tasks");
+      navigate("/superadmin/tasks");
     } catch (error) {
       console.error(
         "Error deleting task",
